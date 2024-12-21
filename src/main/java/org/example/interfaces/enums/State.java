@@ -6,7 +6,8 @@ public enum State {
     SAY("сказать"),
     SEE("увидеть"),
     GO("пойти"),
-    MOVE("переместиться");
+    MOVE("переместиться"),
+    INTEREST("интересоваться");
 
     private final String action;
 
