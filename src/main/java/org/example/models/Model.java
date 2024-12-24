@@ -8,7 +8,6 @@ import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Model extends AbstractPerson {
     private SayStrategy sayStrategy;
@@ -18,12 +17,12 @@ public class Model extends AbstractPerson {
     private ArrayList<Person> children = new ArrayList<>();
     private Person partner;
 
-    public Model(String name, String location, SayStrategy sayStrategy, Gender gender) {
+    public Model(String name, Place location, SayStrategy sayStrategy, Gender gender) {
         super(name, location, gender);
         setSayStrategy(sayStrategy);
     }
 
-    public Model(String name, String location, Gender gender) {
+    public Model(String name, Place location, Gender gender) {
         super(name, location, gender);
         setSayStrategy(new SaySimpleStrategy());
     }
@@ -69,6 +68,7 @@ public class Model extends AbstractPerson {
     @Override
     public void say(String text) {
         setStateNow(State.SAY);
+        System.out.print(getName() + " ");
         this.sayStrategy.say(text);
     }
 
@@ -82,7 +82,7 @@ public class Model extends AbstractPerson {
     @Override
     public void interested(String some) {
         setStateNow(State.INTEREST);
-        System.out.print("Интересоваться " + some);
+        System.out.print(getName() + " интересоваться " + some);
     }
 
     @Override

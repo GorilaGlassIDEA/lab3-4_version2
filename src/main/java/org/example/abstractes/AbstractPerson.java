@@ -4,16 +4,18 @@ import org.example.interfaces.Person;
 import org.example.interfaces.actions.SayStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
+import org.example.models.Place;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public abstract class AbstractPerson implements Person {
     private final String name;
-    private String location;
+    private Place location;
     private State stateNow;
     private final Gender gender;
 
-    public AbstractPerson(String name, String location, Gender gender) {
+    public AbstractPerson(String name, Place location, Gender gender) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException();
         }
@@ -26,7 +28,7 @@ public abstract class AbstractPerson implements Person {
         return gender;
     }
 
-    public String getLocation() {
+    public Place getLocation() {
         return location;
     }
 
@@ -45,13 +47,13 @@ public abstract class AbstractPerson implements Person {
     }
 
     @Override
-    public void move(String location) {
+    public void move(Place location) {
         setLocation(location);
         setStateNow(State.MOVE);
-        System.out.print("отправиться " + location);
+        System.out.print("отправиться в " + location);
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Place location) {
         this.location = location;
     }
 

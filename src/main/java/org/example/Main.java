@@ -1,36 +1,41 @@
 package org.example;
 
-import org.example.interfaces.Person;
+import org.example.abstractes.AbstractPerson;
 import org.example.interfaces.actions.SayLieStrategy;
-import org.example.interfaces.actions.SaySimpleStrategy;
-import org.example.interfaces.actions.SayTruthStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.models.Model;
+import org.example.models.Place;
 
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Person dora = new Model(
+        Place placeMother = new Place("путь");
+        Place placeDoragly = new Place("дворец");
+        Place placeDorabella = new Place("путь");
+        Place placeHusband = new Place("либо на войне, либо на охоте, либо болен");
+
+        AbstractPerson dora = new Model(
                 "Дорагли",
-                "Дворец",
+                placeDoragly,
                 Gender.WOMAN
         );
-        Person dorabella = new Model(
+        AbstractPerson dorabella = new Model(
                 "Дорабелла",
-                "в пути",
+                placeDorabella,
                 Gender.WOMAN
         );
-        Person mother = new Model(
+        AbstractPerson mother = new Model(
                 "Мама Дорагли",
-                "в пути",
+                placeMother,
                 Gender.WOMAN
         );
-        Person husband = new Model(
+        AbstractPerson husband = new Model(
                 "Муж Дорагли",
-                "либо на войне, либо на охоте",
+                placeHusband,
                 Gender.MAN
         );
+
+
         mother.setChild(dora, dorabella);
         System.out.println(mother.getChildren());
 
@@ -38,8 +43,14 @@ public class Main {
         System.out.print(mother.getName() + " ");
         mother.interested("тем, что ");
         mother.see(husband.getName());
-        System.out.print(".\n" + mother.getName() + " ");
-        mother.move("в путь");
+        System.out.print(".\n" + mother.getName() + " в ");
+        mother.move(mother.getLocation());
+        System.out.print(" вместе с " + dorabella.getName() + ".\n");
+        dorabella.interested("");
+        mother.interested(husband.getName());
+        System.out.println();
+        dora.setSayStrategy(new SayLieStrategy());
+        dora.say(placeHusband.name());
 
 
         /**
