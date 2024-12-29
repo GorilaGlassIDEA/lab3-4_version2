@@ -3,7 +3,7 @@ package org.example.interfaces;
 import org.example.interfaces.actions.*;
 import org.example.interfaces.relatives.Relatives;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Person extends Movable, Showable, Interestable, Seeble, Relatives {
     String getName();
@@ -16,9 +16,7 @@ public interface Person extends Movable, Showable, Interestable, Seeble, Relativ
 
     Person getFather();
 
-    ArrayList<Person> getSiblings();
 
     Person getPartner();
 
-    ArrayList<Person> getChildren();
 }

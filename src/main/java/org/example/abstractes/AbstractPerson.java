@@ -4,24 +4,43 @@ import org.example.interfaces.Person;
 import org.example.interfaces.actions.SayStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
+import org.example.models.Model;
 import org.example.models.Place;
 
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 
 public abstract class AbstractPerson implements Person {
     private final String name;
     private Place location;
     private State stateNow;
     private final Gender gender;
+    private String description;
 
     public AbstractPerson(String name, Place location, Gender gender) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        this.name = name;
         this.location = location;
         this.gender = gender;
+        this.name = name;
+    }
+
+    public AbstractPerson(String name, Place location, Gender gender, String description) {
+        this(name, location, gender);
+        this.description = description;
+
+    }
+
+    public AbstractPerson(String name, Gender gender) {
+        this.name = name;
+        this.gender = gender;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Gender getGender() {
@@ -93,12 +112,18 @@ public abstract class AbstractPerson implements Person {
     @Override
     public abstract Person getFather();
 
-    @Override
-    public abstract ArrayList<Person> getSiblings();
+
+    public abstract List<Person> getSiblings();
 
     @Override
     public abstract Person getPartner();
 
+
+    public abstract List<Person> getChildren();
+
     @Override
-    public abstract ArrayList<Person> getChildren();
+    public abstract void setOneChild(Person person);
+
+    @Override
+    public abstract void setOneSiblings(Person person);
 }

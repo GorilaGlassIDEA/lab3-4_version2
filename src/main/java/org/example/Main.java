@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.abstractes.AbstractPerson;
+import org.example.exceptions.FamilyException;
 import org.example.interfaces.actions.SayLieStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.models.Model;
@@ -35,24 +36,27 @@ public class Main {
                 Gender.MAN
         );
 
-
         mother.setChild(dora, dorabella);
-        System.out.println(mother.getChildren());
+        dora.setPartner(husband);
+
+        try {
 
 
-        System.out.print(mother.getName() + " ");
-        mother.interested("тем, что ");
-        mother.see(husband.getName());
-        System.out.print(".\n" + mother.getName() + " в ");
-        mother.move(mother.getLocation());
-        System.out.print(" вместе с " + dorabella.getName() + ".\n");
-        dorabella.interested("");
-        mother.interested(husband.getName());
-        System.out.println();
-        dora.setSayStrategy(new SayLieStrategy());
-        dora.say(placeHusband.name());
+            System.out.print(mother.getName() + " ");
+            mother.interested("тем, что ");
+            mother.see(husband.getName());
+            System.out.print(".\n" + mother.getName() + " в ");
+            mother.move(mother.getLocation());
+            System.out.print(" вместе с " + dorabella.getName() + ".\n");
+            dorabella.interested("");
+            mother.interested(husband.getName());
+            System.out.println();
+            dora.setSayStrategy(new SayLieStrategy());
+            dora.say(placeHusband.name());
 
-
+        } catch (NullPointerException e){
+            System.err.println("Невозможно получить объект, объект не существует");
+        }
         /**
          *
          * Матери Дорагли было очень

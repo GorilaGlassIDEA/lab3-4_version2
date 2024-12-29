@@ -1,21 +1,23 @@
 package org.example.models;
 
 import org.example.abstractes.AbstractPerson;
+import org.example.exceptions.FamilyException;
 import org.example.interfaces.Person;
 import org.example.interfaces.actions.SaySimpleStrategy;
 import org.example.interfaces.actions.SayStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
 
-import java.util.ArrayList;
+import java.nio.file.LinkOption;
+import java.util.*;
 
 public class Model extends AbstractPerson {
     private SayStrategy sayStrategy;
-    private Person mother;
-    private Person father;
-    private ArrayList<Person> siblings = new ArrayList<>();
-    private ArrayList<Person> children = new ArrayList<>();
-    private Person partner;
+    private AbstractPerson mother;
+    private AbstractPerson father;
+    private List<Person> siblings = new ArrayList<>();
+    private List<Person> children = new ArrayList<>();
+    private AbstractPerson partner;
 
     public Model(String name, Place location, SayStrategy sayStrategy, Gender gender) {
         super(name, location, gender);
@@ -27,29 +29,42 @@ public class Model extends AbstractPerson {
         setSayStrategy(new SaySimpleStrategy());
     }
 
+
     @Override
     public void setMother(Person person) {
         if (mother == null) {
-            mother = person;
+            mother = (AbstractPerson) person;
             mother.setChild(this);
         }
     }
 
     @Override
     public void setFather(Person person) {
-        father = person;
-        father.setChild(this);
+        if (father == null) {
+            father = (AbstractPerson) person;
+            father.setOneChild(this);
+        }
     }
 
     @Override
     public void setSiblings(Person... people) {
-        //TODO: дописать родственные связи
+
+        for (Person person : people) {
+            uniquePerson(siblings, person);
+            person.setOneSiblings(this);
+        }
+
+    }
+
+    @Override
+    public void setOneSiblings(Person person) {
+        uniquePerson(siblings, person);
     }
 
     @Override
     public void setPartner(Person person) {
-        if (this.getPartner() == null) {
-            partner = person;
+        if (partner == null) {
+            partner = (AbstractPerson) person;
             person.setPartner(this);
         }
     }
@@ -57,7 +72,19 @@ public class Model extends AbstractPerson {
 
     @Override
     public void setChild(Person... people) {
-        //TODO: дописать родственные связи
+        for (Person person : people) {
+            uniquePerson(children, person);
+            for (Person person2 : people) {
+                if (!person.equals(person2)) {
+                    person.setOneSiblings(person2);
+                    person2.setOneSiblings(person);
+                }
+            }
+            if (person.getFather() == null && getGender() == Gender.MAN)
+                person.setFather(this);
+            if (person.getMother() == null && getGender() == Gender.WOMAN)
+                person.setMother(this);
+        }
     }
 
     @Override
@@ -97,12 +124,12 @@ public class Model extends AbstractPerson {
     }
 
     @Override
-    public ArrayList<Person> getChildren() {
+    public List<Person> getChildren() {
         return children;
     }
 
     @Override
-    public ArrayList<Person> getSiblings() {
+    public List<Person> getSiblings() {
         return siblings;
     }
 
@@ -115,4 +142,18 @@ public class Model extends AbstractPerson {
     public Person getMother() {
         return mother;
     }
+
+    @Override
+    public void setOneChild(Person person) {
+        uniquePerson(siblings, person);
+    }
+
+    public void uniquePerson(List<Person> people, Person checkablePerson) {
+        for (Person p : people) {
+            if (p.equals(checkablePerson))
+                return;
+        }
+        people.add((AbstractPerson) checkablePerson);
+    }
+
 }
