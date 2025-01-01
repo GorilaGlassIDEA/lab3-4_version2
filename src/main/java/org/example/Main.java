@@ -3,6 +3,7 @@ package org.example;
 import org.example.abstractes.AbstractPerson;
 import org.example.exceptions.FamilyException;
 import org.example.interfaces.actions.SayLieStrategy;
+import org.example.interfaces.actions.SayTruthStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.models.Model;
 import org.example.models.Place;
@@ -38,6 +39,7 @@ public class Main {
 
         mother.setChild(dora, dorabella);
         dora.setPartner(husband);
+        dora.setDescription("очень правдивая девушка, которая не умеет врать");
 
         try {
 
@@ -53,8 +55,13 @@ public class Main {
             System.out.println();
             dora.setSayStrategy(new SayLieStrategy());
             dora.say(placeHusband.name());
-
-        } catch (NullPointerException e){
+            System.out.println("\n" + dora.getName() + " " + dora.getDescription());
+            mother.say("у " + dora.getName() + " нет " + husband.getName());
+            System.out.print(mother.getName() + " и ");
+            dorabella.interested("выпытать правду у " + dora.getName() + "\n");
+            dora.setSayStrategy(new SayTruthStrategy());
+            dora.say("всю правду");
+        } catch (NullPointerException e) {
             System.err.println("Невозможно получить объект, объект не существует");
         }
         /**
