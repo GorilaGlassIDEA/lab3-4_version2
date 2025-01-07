@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.abstractes.AbstractPerson;
-import org.example.exceptions.FamilyException;
 import org.example.interfaces.actions.SayLieStrategy;
 import org.example.interfaces.actions.SayTruthStrategy;
 import org.example.interfaces.enums.Gender;
@@ -60,6 +59,7 @@ public class Main {
             System.out.print(mother.getName() + " и ");
             dorabella.interested("выпытать правду у " + dora.getName() + "\n");
             dora.setSayStrategy(new SayTruthStrategy());
+            System.out.print("не выдрежав распросов ");
             dora.say("всю правду");
         } catch (NullPointerException e) {
             System.err.println("Невозможно получить объект, объект не существует");

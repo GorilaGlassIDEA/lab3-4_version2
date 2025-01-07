@@ -1,22 +1,20 @@
 package org.example.models;
 
 import org.example.abstractes.AbstractPerson;
-import org.example.exceptions.FamilyException;
 import org.example.interfaces.Person;
 import org.example.interfaces.actions.SaySimpleStrategy;
 import org.example.interfaces.actions.SayStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
 
-import java.nio.file.LinkOption;
 import java.util.*;
 
 public class Model extends AbstractPerson {
     private SayStrategy sayStrategy;
     private AbstractPerson mother;
     private AbstractPerson father;
-    private List<Person> siblings = new ArrayList<>();
-    private List<Person> children = new ArrayList<>();
+    private final List<Person> siblings = new ArrayList<>();
+    private final List<Person> children = new ArrayList<>();
     private AbstractPerson partner;
 
     public Model(String name, Place location, SayStrategy sayStrategy, Gender gender) {
@@ -153,7 +151,7 @@ public class Model extends AbstractPerson {
             if (p.equals(checkablePerson))
                 return;
         }
-        people.add((AbstractPerson) checkablePerson);
+        people.add(checkablePerson);
     }
 
 }
