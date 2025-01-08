@@ -4,11 +4,10 @@ import org.example.interfaces.Person;
 import org.example.interfaces.actions.SayStrategy;
 import org.example.interfaces.enums.Gender;
 import org.example.interfaces.enums.State;
-import org.example.models.Model;
 import org.example.models.Place;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractPerson implements Person {
     private final String name;
@@ -126,4 +125,16 @@ public abstract class AbstractPerson implements Person {
 
     @Override
     public abstract void setOneSiblings(Person person);
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractPerson that = (AbstractPerson) o;
+        return Objects.equals(name, that.name) && Objects.equals(location, that.location) && stateNow == that.stateNow && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, location, stateNow, description);
+    }
 }

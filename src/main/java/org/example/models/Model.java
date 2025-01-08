@@ -152,6 +152,7 @@ public class Model extends AbstractPerson {
                 return;
         }
         people.add(checkablePerson);
-    }
 
+
+    }
 }
